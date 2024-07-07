@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
-import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/view/editing_screen.dart';
+import 'package:my_resturant_dashboard/Features/Editing_Resturant_Info/view/editing_screen.dart';
 import 'package:my_resturant_dashboard/features/my_resturant/view/my_restu_screen.dart';
 
 class DashboardHomeScreen extends StatefulWidget {

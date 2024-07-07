@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:hive/hive.dart';
-import 'package:my_resturant_dashboard/core/api_constants.dart';
-import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/model/resturant_model.dart';
+import 'package:my_resturant_dashboard/core/networking/api_constants.dart';
+import 'package:my_resturant_dashboard/Features/Editing_Resturant_Info/model/resturant_model.dart';
 
 class RestaurantController extends GetxController {
   var isLoading = false.obs;

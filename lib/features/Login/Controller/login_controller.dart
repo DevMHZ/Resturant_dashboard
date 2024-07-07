@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_resturant_dashboard/core/api_constants.dart';
-import 'package:my_resturant_dashboard/features/My_Resturant/controller/my_restu_controller.dart';
+import 'package:my_resturant_dashboard/core/networking/api_constants.dart';
+import 'package:my_resturant_dashboard/Features/My_Resturant/controller/my_restu_controller.dart';
 import '../../../core/routing/routes.dart';
 
 class LoginController extends GetxController {

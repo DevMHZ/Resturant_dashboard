@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/controller/editing_info_controller.dart';
+import 'package:my_resturant_dashboard/Features/Editing_Resturant_Info/controller/editing_info_controller.dart';
 
 class EditRestaurantInfoView extends StatelessWidget {
   final RestaurantController controller = Get.put(RestaurantController());

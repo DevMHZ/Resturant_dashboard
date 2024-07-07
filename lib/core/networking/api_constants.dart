@@ -1,5 +1,3 @@
-// api_constants.dart
-
 class ApiConstants {
   static const String apiBaseUrl =
       "https://instinctive-fish-utahceratops.glitch.me/api/v1/";

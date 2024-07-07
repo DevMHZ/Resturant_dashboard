@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_resturant_dashboard/features/Login/Controller/login_controller.dart';
+import 'package:my_resturant_dashboard/Features/Login/Controller/login_controller.dart';
 
 class LoginView extends StatelessWidget {
   final LoginController loginController = Get.put(LoginController());

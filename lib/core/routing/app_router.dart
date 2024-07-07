@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_resturant_dashboard/core/routing/routes.dart';
-import 'package:my_resturant_dashboard/features/Login/View/login_screen.dart';
-import 'package:my_resturant_dashboard/features/Root/root.dart';
-import 'package:my_resturant_dashboard/features/Home/ui/home_screen.dart';
-import 'package:my_resturant_dashboard/features/My_Resturant/view/my_restu_screen.dart';
+import 'package:my_resturant_dashboard/Features/Login/View/login_screen.dart';
+import 'package:my_resturant_dashboard/Features/Root/root.dart';
+import 'package:my_resturant_dashboard/Features/Home/ui/home_screen.dart';
+import 'package:my_resturant_dashboard/Features/My_Resturant/view/my_restu_screen.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {

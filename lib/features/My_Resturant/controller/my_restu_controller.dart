@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_resturant_dashboard/core/api_constants.dart';
+import 'package:my_resturant_dashboard/core/networking/api_constants.dart';
 import 'dart:convert';
 import 'package:my_resturant_dashboard/features/My_Resturant/model/my_resturant_model.dart';
 
