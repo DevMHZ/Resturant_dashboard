@@ -35,7 +35,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   get: null
   hive: 
-  hive_flutter: 
+  hive_flutter:
+  flutter_colorpicker: 
 
   http: null
   json_annotation: null

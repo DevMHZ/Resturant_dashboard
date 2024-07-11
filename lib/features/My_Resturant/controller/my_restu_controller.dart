@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_resturant_dashboard/core/networking/api_constants.dart';
 import 'dart:convert';
@@ -31,4 +32,20 @@ class MyResturantMainScreenController extends GetxController {
       throw Exception('Failed to load user data');
     }
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchMyResturantData(getStoredSubDomain()); // Fetch data when the controller is initialized
+  }
 }
+
+  String getStoredSubDomain() {
+    var box = Hive.box('loginBox');
+    return box.get('subDomain') ?? '';
+  }
+
+  String getStoredId() {
+    var box = Hive.box('loginBox');
+    return box.get('id') ?? '';
+  }

@@ -4,7 +4,7 @@ class InfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  InfoRow({required this.label, required this.value});
+  InfoRow({required this.label, required this.value, required IconData icon});
 
   @override
   Widget build(BuildContext context) {
