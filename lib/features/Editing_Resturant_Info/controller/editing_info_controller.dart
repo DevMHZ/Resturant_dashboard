@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:my_resturant_dashboard/Features/My_Resturant/controller/my_restu_controller.dart';
 import 'package:my_resturant_dashboard/core/networking/api_constants.dart';
 import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/model/resturant_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../../My_Resturant/controller/my_restu_controller.dart';
 
 class EditRestaurantInfoController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -23,6 +24,10 @@ class EditRestaurantInfoController extends GetxController {
     password: '',
     mainCategory: [],
     subCategory: [],
+    socialMediaAccounts: [],
+    backgroundColor: '',
+    cardColor: '',
+    primaryColor: '',
   ).obs;
 
   EditRestaurantInfoController() {
@@ -105,6 +110,12 @@ class EditRestaurantInfoController extends GetxController {
         );
       },
     );
+  }
+
+  void updateRestaurantSocialMediaAccounts(List<String> accounts) {
+    restaurant.update((val) {
+      val!.socialMediaAccounts = accounts;
+    });
   }
 
   String getStoredSubDomain() {

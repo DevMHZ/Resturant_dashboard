@@ -36,16 +36,17 @@ class MyResturantMainScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchMyResturantData(getStoredSubDomain()); // Fetch data when the controller is initialized
+    fetchMyResturantData(
+        getStoredSubDomain()); // Fetch data when the controller is initialized
   }
 }
 
-  String getStoredSubDomain() {
-    var box = Hive.box('loginBox');
-    return box.get('subDomain') ?? '';
-  }
+String getStoredSubDomain() {
+  var box = Hive.box('loginBox');
+  return box.get('subDomain') ?? '';
+}
 
-  String getStoredId() {
-    var box = Hive.box('loginBox');
-    return box.get('id') ?? '';
-  }
+String getStoredId() {
+  var box = Hive.box('loginBox');
+  return box.get('id') ?? '';
+}

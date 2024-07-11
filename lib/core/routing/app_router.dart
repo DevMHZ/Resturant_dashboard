@@ -19,8 +19,6 @@ class AppRouter {
           builder: (_) => LoginView(),
         );
       case Routes.homeScreen:
-        // Extract the id from arguments if provided
-        // String id = arguments as String? ?? '';
         return MaterialPageRoute(
           builder: (_) => DashboardHomeScreen(),
         );

@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:my_resturant_dashboard/Features/Login/View/login_screen.dart';
 import 'package:my_resturant_dashboard/Features/Home/ui/home_screen.dart';
-import 'package:my_resturant_dashboard/Features/My_Resturant/controller/my_restu_controller.dart';
+
+import '../My_Resturant/controller/my_restu_controller.dart';
 
 class Root extends StatelessWidget {
   const Root({super.key});

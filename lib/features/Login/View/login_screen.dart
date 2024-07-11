@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_resturant_dashboard/Features/Login/Controller/login_controller.dart';
+import 'package:my_resturant_dashboard/core/helpers/spacing.dart';
 
 class LoginView extends StatelessWidget {
   final LoginController loginController = Get.put(LoginController());
@@ -29,7 +30,7 @@ class LoginView extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  verticalSpace(20),
                   TextField(
                     controller: loginController.nameController,
                     decoration: InputDecoration(
@@ -40,7 +41,7 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  verticalSpace(20),
                   TextField(
                     controller: loginController.passwordController,
                     decoration: InputDecoration(
@@ -52,7 +53,7 @@ class LoginView extends StatelessWidget {
                     ),
                     obscureText: true,
                   ),
-                  SizedBox(height: 30),
+                 verticalSpace(30),
                   Obx(() => loginController.isLoading.value
                       ? CircularProgressIndicator(
                           backgroundColor: Colors.blue,

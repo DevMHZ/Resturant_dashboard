@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_resturant_dashboard/Features/My_Resturant/controller/my_restu_controller.dart';
+import 'package:my_resturant_dashboard/core/helpers/spacing.dart';
 import 'package:my_resturant_dashboard/features/My_Resturant/widgets/build_card.dart';
 import '../widgets/info_widget.dart';
 
@@ -27,7 +28,7 @@ class MyResturantMainScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                SizedBox(height: 16),
+                verticalSpace(16),
                 buildCard(
                   context,
                   children: [
@@ -72,7 +73,7 @@ class MyResturantMainScreen extends StatelessWidget {
                           userController.userData.value.mainCategory.join(", "),
                       icon: Icons.restaurant_menu,
                     ),
-                    SizedBox(height: 16),
+                    verticalSpace(16),
                     Text(
                       'Sub Categories',
                       style:

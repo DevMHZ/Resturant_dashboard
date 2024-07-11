@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/controller/editing_info_controller.dart';
+import 'package:my_resturant_dashboard/core/helpers/spacing.dart';
 import 'package:my_resturant_dashboard/features/Editing_Resturant_Info/model/resturant_model.dart';
+
+import '../controller/editing_info_controller.dart';
 
 class EditRestaurantInfoView extends StatelessWidget {
   final EditRestaurantInfoController controller =
@@ -43,15 +46,18 @@ class EditRestaurantInfoView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildTextFields(context),
-                    SizedBox(height: 20),
+                    _buildRestaurantInformation(context),
+                    verticalSpace(20),
                     _buildColorPicker(context),
-                    SizedBox(height: 20),
+                    verticalSpace(20),
                     _buildMainCategoryEditor(context),
-                    SizedBox(height: 20),
+                    verticalSpace(20),
                     _buildSubCategoryEditor(context),
-                    SizedBox(height: 20),
+                    verticalSpace(20),
+                    _buildSocialMediaAccountsEditor(context),
+                    verticalSpace(20),
                     _buildUpdateButton(context),
+                    verticalSpace(20),
                   ],
                 ),
               ),
@@ -62,15 +68,179 @@ class EditRestaurantInfoView extends StatelessWidget {
     );
   }
 
+  Widget _buildRestaurantInformation(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Restaurant Information',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        verticalSpace(16),
+        TextFormField(
+          initialValue: controller.restaurant.value.name,
+          onChanged: (value) => controller.updateRestaurantName(value),
+          decoration: InputDecoration(
+            labelText: 'Restaurant Name',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a restaurant name';
+            }
+            return null;
+          },
+        ),
+        verticalSpace(16),
+        TextFormField(
+          initialValue: controller.restaurant.value.titleName,
+          onChanged: (value) => controller.updateRestaurantTitleName(value),
+          decoration: InputDecoration(
+            labelText: 'Title Name',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a title name';
+            }
+            return null;
+          },
+        ),
+        verticalSpace(16),
+        TextFormField(
+          initialValue: controller.restaurant.value.phone,
+          onChanged: (value) => controller.updateRestaurantPhone(value),
+          decoration: InputDecoration(
+            labelText: 'Phone Number',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a phone number';
+            }
+            return null;
+          },
+        ),
+        verticalSpace(16),
+        TextFormField(
+          initialValue: controller.restaurant.value.profileimg,
+          onChanged: (value) => controller.updateRestaurantProfileImg(value),
+          decoration: InputDecoration(
+            labelText: 'Profile Image URL',
+            border: OutlineInputBorder(),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter a profile image URL';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildColorPicker(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        verticalSpace(16),
+        Text(
+          'Background Color',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        verticalSpace(8),
+        InkWell(
+          onTap: () => _pickColor(context),
+          child: Container(
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(
+              color: controller.restaurant.value.mainColor.isNotEmpty
+                  ? getColorFromHex(controller.restaurant.value.mainColor)
+                  : Colors.white,
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              'Pick a color',
+              style: TextStyle(
+                color: controller.restaurant.value.mainColor.isNotEmpty
+                    ? useWhiteForeground(getColorFromHex(
+                            controller.restaurant.value.mainColor))
+                        ? Colors.white
+                        : Colors.black
+                    : Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _pickColor(BuildContext context) {
+    Color currentColor = controller.restaurant.value.mainColor.isNotEmpty
+        ? getColorFromHex(controller.restaurant.value.mainColor)
+        : Colors.white;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Pick a color'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: currentColor,
+              onColorChanged: (color) {
+                controller
+                    .updateRestaurantMainColor(color.value.toRadixString(16));
+              },
+              colorPickerWidth: 300.0,
+              pickerAreaHeightPercent: 0.7,
+              enableAlpha: false,
+              displayThumbColor: true,
+              showLabel: true,
+              paletteType: PaletteType.hsv,
+              pickerAreaBorderRadius: const BorderRadius.only(
+                topLeft: const Radius.circular(2.0),
+                topRight: const Radius.circular(2.0),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Done'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildMainCategoryEditor(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Main Categories',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-        SizedBox(height: 8),
+        verticalSpace(8),
         Obx(() => ListView.builder(
               shrinkWrap: true,
               itemCount: controller.restaurant.value.mainCategory.length,
@@ -93,7 +263,7 @@ class EditRestaurantInfoView extends StatelessWidget {
                 );
               },
             )),
-        SizedBox(height: 8),
+        verticalSpace(8),
         ElevatedButton(
           onPressed: () => _addMainCategory(context),
           child: Text('Add Main Category'),
@@ -108,9 +278,12 @@ class EditRestaurantInfoView extends StatelessWidget {
       children: [
         Text(
           'Sub Categories',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-        SizedBox(height: 8),
+        verticalSpace(8),
         Obx(() => ListView.builder(
               shrinkWrap: true,
               itemCount: controller.restaurant.value.subCategory.length,
@@ -136,7 +309,7 @@ class EditRestaurantInfoView extends StatelessWidget {
                 );
               },
             )),
-        SizedBox(height: 8),
+        verticalSpace(8),
         ElevatedButton(
           onPressed: () => _addSubCategory(context),
           child: Text('Add Sub Category'),
@@ -145,114 +318,31 @@ class EditRestaurantInfoView extends StatelessWidget {
     );
   }
 
-  Widget _buildTextFields(BuildContext context) {
+  Widget _buildSocialMediaAccountsEditor(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Restaurant Information',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          initialValue: controller.restaurant.value.name,
-          onChanged: (value) => controller.updateRestaurantName(value),
-          decoration: InputDecoration(
-            labelText: 'Restaurant Name',
-            border: OutlineInputBorder(),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter a restaurant name';
-            }
-            return null;
-          },
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          initialValue: controller.restaurant.value.titleName,
-          onChanged: (value) => controller.updateRestaurantTitleName(value),
-          decoration: InputDecoration(
-            labelText: 'Title Name',
-            border: OutlineInputBorder(),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter a title name';
-            }
-            return null;
-          },
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          initialValue: controller.restaurant.value.phone,
-          onChanged: (value) => controller.updateRestaurantPhone(value),
-          decoration: InputDecoration(
-            labelText: 'Phone Number',
-            border: OutlineInputBorder(),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter a phone number';
-            }
-            return null;
-          },
-        ),
-        SizedBox(height: 16),
-        TextFormField(
-          initialValue: controller.restaurant.value.profileimg,
-          onChanged: (value) => controller.updateRestaurantProfileImg(value),
-          decoration: InputDecoration(
-            labelText: 'Profile Image URL',
-            border: OutlineInputBorder(),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter a profile image URL';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildColorPicker(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 16),
-        Text(
-          'Main Color',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        SizedBox(height: 8),
-        InkWell(
-          onTap: () => controller.pickColor(context),
-          child: Container(
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              color: controller.restaurant.value.mainColor.isNotEmpty
-                  ? controller
-                      .getColorFromHex(controller.restaurant.value.mainColor)
-                  : Colors.white,
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              'Pick a color',
-              style: TextStyle(
-                color: controller.restaurant.value.mainColor.isNotEmpty
-                    ? controller.useWhiteForeground(controller.getColorFromHex(
-                            controller.restaurant.value.mainColor))
-                        ? Colors.white
-                        : Colors.black
-                    : Colors.black,
-                fontSize: 16,
+          'Social Media Accounts',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
               ),
-            ),
+        ),
+        verticalSpace(8),
+        TextFormField(
+          initialValue: controller.restaurant.value.socialMediaAccounts
+              .join(', '), // Convert list to comma-separated string
+          onChanged: (value) {
+            List<String> accounts = value
+                .split(',')
+                .map((e) => e.trim())
+                .toList(); // Split string into list of accounts
+            controller.updateRestaurantSocialMediaAccounts(accounts);
+          },
+          decoration: InputDecoration(
+            labelText: 'Social Media Accounts (comma-separated)',
+            border: OutlineInputBorder(),
           ),
         ),
       ],
@@ -265,9 +355,7 @@ class EditRestaurantInfoView extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            controller.updateRestaurantData(
-              context, // Correctly passing the BuildContext
-            );
+            controller.updateRestaurantData(context);
           }
         },
         child: Text('Update Restaurant Data'),
@@ -395,7 +483,7 @@ class EditRestaurantInfoView extends StatelessWidget {
                 controller: nameController,
                 decoration: InputDecoration(hintText: 'Enter name'),
               ),
-              SizedBox(height: 8),
+              verticalSpace(8),
               TextField(
                 controller: descriptionController,
                 decoration: InputDecoration(hintText: 'Enter description'),
@@ -416,12 +504,12 @@ class EditRestaurantInfoView extends StatelessWidget {
                 String description = descriptionController.text.trim();
                 if (name.isNotEmpty) {
                   SubCategory newSubCategory = SubCategory(
-                    id: '', // Generate or assign a unique ID
-                    mainCategory: '', // Assign appropriate main category
+                    id: '',
                     name: name,
-                    price: '0', // Default price or value
-                    img: '', // Default image URL or empty
-                    description: description, // Default description or empty
+                    description: description,
+                    mainCategory: '',
+                    price: '',
+                    img: '',
                   );
                   controller.addSubCategory(newSubCategory);
                   Navigator.of(context).pop();
@@ -454,7 +542,7 @@ class EditRestaurantInfoView extends StatelessWidget {
                 controller: nameController,
                 decoration: InputDecoration(hintText: 'Enter name'),
               ),
-              SizedBox(height: 8),
+              verticalSpace(8),
               TextField(
                 controller: descriptionController,
                 decoration: InputDecoration(hintText: 'Enter description'),
@@ -476,12 +564,12 @@ class EditRestaurantInfoView extends StatelessWidget {
                 if (name.isNotEmpty) {
                   SubCategory updatedSubCategory = SubCategory(
                     id: controller.restaurant.value.subCategory[index].id,
+                    name: name,
+                    description: description,
                     mainCategory: controller
                         .restaurant.value.subCategory[index].mainCategory,
-                    name: name,
                     price: controller.restaurant.value.subCategory[index].price,
                     img: controller.restaurant.value.subCategory[index].img,
-                    description: description,
                   );
                   controller.editSubCategory(index, updatedSubCategory);
                   Navigator.of(context).pop();
@@ -523,5 +611,13 @@ class EditRestaurantInfoView extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color getColorFromHex(String hexColor) {
+    hexColor = hexColor.replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor; // Add alpha channel if missing
+    }
+    return Color(int.parse(hexColor, radix: 16));
   }
 }
