@@ -5,7 +5,7 @@ Widget buildCard(BuildContext context, {required List<Widget> children}) {
     builder: (context, constraints) {
       bool isWideScreen = constraints.maxWidth > 600;
       return Card(
-        color: Colors.orange[50],
+        color: Colors.yellow[300],
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),

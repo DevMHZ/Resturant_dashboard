@@ -34,6 +34,7 @@ class EditRestaurantInfoController extends GetxController {
     var subDomain = getStoredSubDomain();
     fetchRestaurantData(subDomain);
   }
+//Main Categories
 
   void addMainCategory(String category) {
     restaurant.update((val) {
@@ -53,6 +54,7 @@ class EditRestaurantInfoController extends GetxController {
     });
   }
 
+//Sub Categories
   void addSubCategory(SubCategory subCategory) {
     restaurant.update((val) {
       val!.subCategory.add(subCategory);
@@ -70,10 +72,11 @@ class EditRestaurantInfoController extends GetxController {
       val!.subCategory.removeAt(index);
     });
   }
+//Colors
 
-  void pickColor(BuildContext context) {
-    Color currentColor = restaurant.value.mainColor.isNotEmpty
-        ? getColorFromHex(restaurant.value.mainColor)
+  void pickMainColor(BuildContext context) {
+    Color currentColor = restaurant.value.mainColor.isNotEmpty 
+        ? getColorFromHex(restaurant.value.mainColor) 
         : Colors.white;
 
     showDialog(
@@ -111,23 +114,26 @@ class EditRestaurantInfoController extends GetxController {
       },
     );
   }
+  
 
+//Social media
   void updateRestaurantSocialMediaAccounts(List<String> accounts) {
     restaurant.update((val) {
       val!.socialMediaAccounts = accounts;
     });
   }
 
-  String getStoredSubDomain() {
-    var box = Hive.box('loginBox');
-    return box.get('subDomain') ?? '';
+//Colors Modif
+  void updateRestaurantMainColor(String color) {
+    restaurant.update((val) {
+      val!.mainColor = color;
+    });
   }
-
-  String getStoredId() {
-    var box = Hive.box('loginBox');
-    return box.get('id') ?? '';
+void updateRestaurantCardColor(String color) {
+    restaurant.update((val) {
+      val!.cardColor = color;
+    });
   }
-
   Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
@@ -140,6 +146,7 @@ class EditRestaurantInfoController extends GetxController {
     return color.computeLuminance() > 0.5;
   }
 
+// Fetch Data before and after Editing
   void fetchRestaurantData(String subDomain) async {
     isLoading.value = true;
     final response = await http.get(
@@ -154,6 +161,7 @@ class EditRestaurantInfoController extends GetxController {
     isLoading.value = false;
   }
 
+//Updating Data main Function
   void updateRestaurantData(BuildContext context) {
     final updatedData =
         restaurant.value; // Assuming restaurant.value has the latest data
@@ -191,17 +199,13 @@ class EditRestaurantInfoController extends GetxController {
     });
   }
 
-  void updateRestaurantMainColor(String color) {
-    restaurant.update((val) {
-      val!.mainColor = color;
-    });
-  }
-
+//Resturant Name (Used for Login)
   void updateRestaurantName(String name) {
     restaurant.update((val) {
       val!.name = name;
     });
   }
+//Resturant Name (Used for Res Info for User)
 
   void updateRestaurantTitleName(String titleName) {
     restaurant.update((val) {
@@ -219,5 +223,15 @@ class EditRestaurantInfoController extends GetxController {
     restaurant.update((val) {
       val!.profileimg = profileImg;
     });
+  }
+
+  String getStoredSubDomain() {
+    var box = Hive.box('loginBox');
+    return box.get('subDomain') ?? '';
+  }
+
+  String getStoredId() {
+    var box = Hive.box('loginBox');
+    return box.get('id') ?? '';
   }
 }

@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
-import 'package:my_resturant_dashboard/Features/Editing_Resturant_Info/view/editing_screen.dart';
 import 'package:my_resturant_dashboard/features/my_resturant/view/my_restu_screen.dart';
+import '../../Editing_Resturant_Info/view/editing_screen.dart';
 
 class DashboardHomeScreen extends StatefulWidget {
-  const DashboardHomeScreen({
-    super.key,
-  });
+  const DashboardHomeScreen({Key? key}) : super(key: key);
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _DashboardHomeScreenState createState() => _DashboardHomeScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardHomeScreen> {
+class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   final PageController pageController = PageController();
   final SideMenuController sideMenuController = SideMenuController();
 
   @override
   void initState() {
     super.initState();
-
-    // Listen to page changes and update side menu selection
     pageController.addListener(() {
       sideMenuController.changePage(pageController.page!.toInt());
     });
@@ -41,30 +37,37 @@ class _DashboardScreenState extends State<DashboardHomeScreen> {
         child: Row(
           children: [
             SideMenu(
-              key: const Key('side_menu'),
               controller: sideMenuController,
               style: SideMenuStyle(
                 displayMode: SideMenuDisplayMode.auto,
-                hoverColor: Colors.blue[100],
-                selectedColor: Colors.lightBlue,
-                selectedTitleTextStyle: const TextStyle(color: Colors.white),
+                hoverColor: Colors.redAccent,
+                selectedColor: Colors.yellow,
+                selectedTitleTextStyle: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
                 selectedIconColor: Colors.white,
                 unselectedTitleTextStyle: const TextStyle(color: Colors.black),
                 unselectedIconColor: Colors.black54,
-                backgroundColor: Colors.grey[200],
-                openSideMenuWidth: 200,
-                compactSideMenuWidth: 40,
+                backgroundColor: Colors.grey[300],
+                openSideMenuWidth: 250,
+                compactSideMenuWidth: 70,
+                toggleColor: Colors.yellow,
+                itemHeight: 60,
+                iconSize: 24,
               ),
               items: [
                 SideMenuItem(
-                  title: '  مطعمي',
+                  title: '',
+                  trailing: Text('معلومات المطعم'),
+                  iconWidget: Icon(Icons.restaurant),
                   onTap: (index, controller) {
                     pageController.jumpToPage(0);
                     controller.changePage(index);
                   },
                 ),
                 SideMenuItem(
-                  title: 'تعديل معلومات المطعم',
+                  title: '',
+                  trailing: Text('تعديل معلومات المطعم'),
+                  iconWidget: Icon(Icons.edit),
                   onTap: (index, controller) {
                     pageController.jumpToPage(1);
                     controller.changePage(index);
@@ -74,14 +77,14 @@ class _DashboardScreenState extends State<DashboardHomeScreen> {
               onDisplayModeChanged: (mode) {
                 print(mode);
               },
-              showToggle: true,
-              alwaysShowFooter: false,
-              collapseWidth: 600,
             ),
             Expanded(
               child: PageView(
                 controller: pageController,
-                children: [MyResturantMainScreen(), EditRestaurantInfoView()],
+                children: [
+                  MyResturantMainScreen(),
+                  EditRestaurantInfoView(),
+                ],
               ),
             ),
           ],
