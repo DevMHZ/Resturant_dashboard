@@ -27,7 +27,7 @@ Widget buildRestaurantInformation(BuildContext context) {
       // ),
       TextFormField(
         initialValue: controller.restaurant.value.titleName,
-        onChanged: (value) => controller.updateRestaurantTitleName(value),
+        onChanged: (value) => controller.updateRestaurantName(value),
         decoration: InputDecoration(
           labelText: 'اسم المطعم',
           border: OutlineInputBorder(),

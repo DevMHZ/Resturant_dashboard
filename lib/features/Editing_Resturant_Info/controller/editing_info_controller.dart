@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -199,14 +198,10 @@ class EditRestaurantInfoController extends GetxController {
   }
 
 //Resturant Name (Used for Login)
-  void updateRestaurantName(String name) {
-    restaurant.update((val) {
-      val!.name = name;
-    });
-  }
+  
 //Resturant Name (Used for Res Info for User)
 
-  void updateRestaurantTitleName(String titleName) {
+  void updateRestaurantName(String titleName) {
     restaurant.update((val) {
       val!.titleName = titleName;
     });

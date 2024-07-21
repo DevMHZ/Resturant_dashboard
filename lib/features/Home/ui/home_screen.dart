@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:my_resturant_dashboard/features/editing_password_screen/view/editing_pass_screen.dart';
 import 'package:my_resturant_dashboard/features/my_resturant/view/my_restu_screen.dart';
 import '../../Editing_Resturant_Info/view/editing_screen.dart';
 
@@ -75,6 +76,15 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     controller.changePage(index);
                   },
                 ),
+                SideMenuItem(
+                  title: '',
+                  trailing: Text('تعديل المعلومات الخاصة '),
+                  iconWidget: Icon(Icons.edit),
+                  onTap: (index, controller) {
+                    pageController.jumpToPage(2);
+                    controller.changePage(index);
+                  },
+                ),
               ],
               onDisplayModeChanged: (mode) {
                 print(mode);
@@ -86,6 +96,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                 children: [
                   MyResturantMainScreen(),
                   EditRestaurantInfoView(),
+                  ChangePasswordScreen(),
                 ],
               ),
             ),

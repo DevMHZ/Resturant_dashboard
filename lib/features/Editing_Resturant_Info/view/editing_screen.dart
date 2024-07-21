@@ -103,30 +103,14 @@ class EditRestaurantInfoView extends StatelessWidget {
   }
 
   Widget _buildUpdateButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: ElevatedButton(
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            controller.updateRestaurantData(context);
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.redAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-        ),
-        child: Text(
-          'تحديث المعلومات',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+    return FloatingActionButton(
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          controller.updateRestaurantData(context);
+        }
+      },
+      backgroundColor: Colors.redAccent,
+      child: Icon(Icons.save),
     );
   }
 
