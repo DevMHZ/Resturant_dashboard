@@ -32,6 +32,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Row(
@@ -39,6 +40,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
             SideMenu(
               controller: sideMenuController,
               style: SideMenuStyle(
+                showHamburger: true,
                 displayMode: SideMenuDisplayMode.auto,
                 hoverColor: Colors.redAccent,
                 selectedColor: Colors.yellow,

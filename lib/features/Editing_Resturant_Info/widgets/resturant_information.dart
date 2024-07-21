@@ -55,20 +55,20 @@ Widget buildRestaurantInformation(BuildContext context) {
         },
       ),
       verticalSpace(16),
-      TextFormField(
-        initialValue: controller.restaurant.value.profileimg,
-        onChanged: (value) => controller.updateRestaurantProfileImg(value),
-        decoration: InputDecoration(
-          labelText: 'Profile Image URL',
-          border: OutlineInputBorder(),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter a profile image URL';
-          }
-          return null;
-        },
-      ),
+      // TextFormField(
+      //   initialValue: controller.restaurant.value.profileimg,
+      //   onChanged: (value) => controller.updateRestaurantProfileImg(value),
+      //   decoration: InputDecoration(
+      //     labelText: 'Profile Image URL',
+      //     border: OutlineInputBorder(),
+      //   ),
+      //   validator: (value) {
+      //     if (value == null || value.isEmpty) {
+      //       return 'Please enter a profile image URL';
+      //     }
+      //     return null;
+      //   },
+      // ),
     ],
   );
 }

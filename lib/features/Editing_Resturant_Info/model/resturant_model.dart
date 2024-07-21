@@ -76,8 +76,6 @@ class Restaurant {
   }
 }
 
-
-
 class SubCategory {
   String id;
   String mainCategory;

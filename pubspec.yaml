@@ -36,13 +36,12 @@ dependencies:
   get: null
   hive: 
   hive_flutter:
-  flutter_colorpicker: 
+  flutter_colorpicker:
+  file_picker: 
 
   http: null
-  json_annotation: null
 dev_dependencies:
   hive_generator: 
-  build_runner:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter

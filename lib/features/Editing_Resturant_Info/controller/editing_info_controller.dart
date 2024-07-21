@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -61,12 +63,6 @@ class EditRestaurantInfoController extends GetxController {
     });
   }
 
-  void editSubCategory(int index, SubCategory subCategory) {
-    restaurant.update((val) {
-      val!.subCategory[index] = subCategory;
-    });
-  }
-
   void removeSubCategory(int index) {
     restaurant.update((val) {
       val!.subCategory.removeAt(index);
@@ -75,8 +71,8 @@ class EditRestaurantInfoController extends GetxController {
 //Colors
 
   void pickMainColor(BuildContext context) {
-    Color currentColor = restaurant.value.mainColor.isNotEmpty 
-        ? getColorFromHex(restaurant.value.mainColor) 
+    Color currentColor = restaurant.value.mainColor.isNotEmpty
+        ? getColorFromHex(restaurant.value.mainColor)
         : Colors.white;
 
     showDialog(
@@ -114,7 +110,6 @@ class EditRestaurantInfoController extends GetxController {
       },
     );
   }
-  
 
 //Social media
   void updateRestaurantSocialMediaAccounts(List<String> accounts) {
@@ -129,11 +124,13 @@ class EditRestaurantInfoController extends GetxController {
       val!.mainColor = color;
     });
   }
-void updateRestaurantCardColor(String color) {
+
+  void updateRestaurantCardColor(String color) {
     restaurant.update((val) {
       val!.cardColor = color;
     });
   }
+
   Color getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
@@ -163,11 +160,10 @@ void updateRestaurantCardColor(String color) {
 
 //Updating Data main Function
   void updateRestaurantData(BuildContext context) {
-    final updatedData =
-        restaurant.value; // Assuming restaurant.value has the latest data
+    final updatedData = restaurant.value;
     final id = getStoredId();
     isLoading.value = true;
-    print('Updating restaurant data...');
+
     http
         .put(Uri.parse(ApiConstants.updateRestaurantData(id)),
             headers: {
@@ -182,7 +178,6 @@ void updateRestaurantCardColor(String color) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Data updated successfully')));
 
-        // Notify MyResturantMainScreenController to refetch data
         final MyResturantMainScreenController myResturantController =
             Get.find();
         myResturantController.fetchMyResturantData(getStoredSubDomain());
@@ -219,10 +214,63 @@ void updateRestaurantCardColor(String color) {
     });
   }
 
-  void updateRestaurantProfileImg(String profileImg) {
+  void editSubCategory(int index, SubCategory updatedSubCategory) {
+    print('Updating subcategory at index: $index');
+    print('New subcategory details: ${updatedSubCategory.toJson()}');
     restaurant.update((val) {
-      val!.profileimg = profileImg;
+      if (val != null && index >= 0 && index < val.subCategory.length) {
+        val.subCategory[index] = updatedSubCategory;
+      }
     });
+  }
+
+  Future<String> uploadImage(PlatformFile file) async {
+    print('Starting image upload...'); // Debugging point
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(
+          'https://instinctive-fish-utahceratops.glitch.me/api/v1/upload'),
+    );
+    request.files.add(http.MultipartFile.fromBytes('image', file.bytes!,
+        filename: file.name));
+    print('Sending request to server...'); // Debugging point
+    var response = await request.send();
+    print(
+        'Response received with status code: ${response.statusCode}'); // Debugging point
+    if (response.statusCode == 200) {
+      var responseData = await response.stream.bytesToString();
+      print('Response data: $responseData'); // Debugging point
+      return responseData.trim();
+    } else {
+      var responseData = await response.stream.bytesToString();
+      print('Server error response data: $responseData'); // Debugging point
+      throw Exception('Failed to upload image: ${response.statusCode}');
+    }
+  }
+
+  Future<void> updateSubCategoryWithImage(int index, PlatformFile file) async {
+    try {
+      print('Uploading image for subcategory index: $index'); // Debugging point
+      String imageUrl = await uploadImage(file);
+
+      print(
+          'Image uploaded successfully. Image URL: $imageUrl'); // Debugging point
+
+      // Fetch the current subcategory
+      var updatedSubCategory = restaurant.value.subCategory[index];
+      // Update the image URL
+      updatedSubCategory.img = imageUrl;
+
+      print('Updating subcategory with new image URL...'); // Debugging point
+      // Call the editSubCategory method to update it
+      editSubCategory(index, updatedSubCategory);
+      print(
+          'Current restaurant subcategories: ${restaurant.value.subCategory.map((sc) => sc.toJson()).toList()}');
+
+      print('Subcategory updated successfully'); // Debugging point
+    } catch (e) {
+      print('Error uploading image: $e'); // Debugging point
+    }
   }
 
   String getStoredSubDomain() {
