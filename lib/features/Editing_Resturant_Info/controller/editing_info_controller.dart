@@ -57,11 +57,11 @@ class EditRestaurantInfoController extends GetxController {
   }
 
 //Sub Categories
-  void addSubCategory(SubCategory subCategory) {
-    restaurant.update((val) {
-      val!.subCategory.add(subCategory);
-    });
-  }
+  // void addSubCategory(SubCategory subCategory) {
+  //   restaurant.update((val) {
+  //     val!.subCategory.add(subCategory);
+  //   });
+  // }
 
   void removeSubCategory(int index) {
     restaurant.update((val) {
@@ -165,11 +165,13 @@ class EditRestaurantInfoController extends GetxController {
     isLoading.value = true;
 
     http
-        .put(Uri.parse(ApiConstants.updateRestaurantData(id)),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: json.encode(updatedData.toJson()))
+        .put(
+      Uri.parse(ApiConstants.updateRestaurantData(id)),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(updatedData.toJson()),
+    )
         .then((response) {
       if (response.statusCode == 200) {
         print('Restaurant data updated successfully.');
@@ -182,6 +184,8 @@ class EditRestaurantInfoController extends GetxController {
             Get.find();
         myResturantController.fetchMyResturantData(getStoredSubDomain());
       } else {
+        print('Failed to update restaurant data: ${response.statusCode}');
+        print('Response body: ${response.body}');
         throw Exception(
             'Failed to update restaurant data: ${response.statusCode}');
       }
@@ -221,6 +225,12 @@ class EditRestaurantInfoController extends GetxController {
       if (val != null && index >= 0 && index < val.subCategory.length) {
         val.subCategory[index] = updatedSubCategory;
       }
+    });
+  }
+
+  void addSubCategory(SubCategory subCategory) {
+    restaurant.update((val) {
+      val!.subCategory.add(subCategory);
     });
   }
 
